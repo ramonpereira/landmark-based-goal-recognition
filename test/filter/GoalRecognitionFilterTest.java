@@ -3,12 +3,10 @@ package filter;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
 
-import javaff.data.Fact;
 import javaff.data.GroundFact;
 
 public class GoalRecognitionFilterTest {
