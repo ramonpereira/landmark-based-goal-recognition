@@ -1,5 +1,13 @@
 # Planning-PlanRecognition
 
+Landmark-Based Goal Recognition Approaches As Planning.
+
+- Goal Recognition Filter using Landmarks;
+
+- Goal Completion Heuristic;
+
+- Landmark Uniqueness Heuristic;
+
 ## Parameters
 
 - Option (1) - Parameters needed: <filter | goalcompletion | uniqueness> <tar.bz2 file> <threshold_value>
