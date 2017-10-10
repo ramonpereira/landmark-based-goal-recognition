@@ -8,7 +8,13 @@ Landmark-Based Goal Recognition Approaches As Planning.
 
 - Landmark Uniqueness Heuristic;
 
-## Parameters
+These approaches have been published in ECAI-16 and AAAI-17.
+
+- [Landmark-Based Heuristics for Goal Recognition (AAAI-17)](https://www.aaai.org/ocs/index.php/AAAI/AAAI17/paper/view/14666).
+
+- [Landmark-Based Plan Recognition (ECAI-16)](https://arxiv.org/pdf/1604.01277.pdf)
+
+## Usage
 
 - Option (1) - Parameters needed: <filter | goalcompletion | uniqueness> <tar.bz2 file> <threshold_value>
 
