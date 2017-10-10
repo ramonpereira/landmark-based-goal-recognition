@@ -30,6 +30,10 @@ import parser.PDDLParser;
  *
  */
 public abstract class Recognizer {
+	
+	public enum Approach {
+		FILTER, GOAL_COMPLETION_HEURISTIC, UNIQUENESS_HEURISTIC;
+	};
 
 	protected GroundProblem groundProblem;
 	protected List<Action> observations;
@@ -196,5 +200,17 @@ public abstract class Recognizer {
 	 */
 	public boolean recognize() throws IOException, InterruptedException{
 		return false;
+	}
+	
+	public int getAmountOfRecognizedGoals() {
+		return amountOfRecognizedGoals;
+	}
+	
+	public int getAmountOfCandidateGoals(){
+		return this.goals.size();
+	}
+	
+	public int getObservationsSize(){
+		return this.observations.size();
 	}
 }
