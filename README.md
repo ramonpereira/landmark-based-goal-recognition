@@ -1,6 +1,6 @@
 # Planning-PlanRecognition
 
-Landmark-Based Goal Recognition Approaches As Planning.
+Landmark-Based Approaches For Goal Recognition.
 
 - Goal Recognition Filter using Landmarks;
 
@@ -10,9 +10,9 @@ Landmark-Based Goal Recognition Approaches As Planning.
 
 These approaches have been published in ECAI-16 and AAAI-17.
 
-- [Landmark-Based Heuristics for Goal Recognition (AAAI-17)](https://www.aaai.org/ocs/index.php/AAAI/AAAI17/paper/view/14666).
-
 - [Landmark-Based Plan Recognition (ECAI-16)](https://arxiv.org/pdf/1604.01277.pdf)
+
+- [Landmark-Based Heuristics for Goal Recognition (AAAI-17)](https://www.aaai.org/ocs/index.php/AAAI/AAAI17/paper/view/14666).
 
 ## Usage
 
