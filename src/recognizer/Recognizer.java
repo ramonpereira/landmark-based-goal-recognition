@@ -149,7 +149,6 @@ public abstract class Recognizer {
 				System.out.println("\t\t # " + landmarkOrdering);
 			
 			Set<Set<Fact>> achievedLandmarks = new HashSet<>();
-			Set<Fact> achievedFactLandmarks = new HashSet<>();
 			System.out.println();
 			
 			/* Computing achieved landmarks from observations for a candidate goal */
@@ -168,11 +167,6 @@ public abstract class Recognizer {
 						}
 					}
 				}
-				if(achievedLandmarks.isEmpty())
-					for(Fact obs: observedFacts)
-						if(landmarkExtractor.getFactLandmarks().contains(obs))
-							achievedFactLandmarks.add(obs);
-				
 				currentState = (STRIPSState) currentState.apply(o);
 			}
 			goalsToAchievedLandmarks.put(goal, achievedLandmarks);
