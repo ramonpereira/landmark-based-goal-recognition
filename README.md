@@ -31,3 +31,11 @@ java -jar goalrecognizer1.0.jar -filter experiments/blocks-test/blocks-test.tar.
 ```bash
 java -jar goalrecognizer1.0.jar -goalcompletion experiments/blocks-test/domain.pddl experiments/blocks-test/template.pddl experiments/blocks-test/hyps.dat experiments/blocks-test/obs.dat experiments/blocks-test/real_hyp.dat 0.1
 ```
+
+## Dependencies
+
+Our goal recognizer uses the following libs (which are included in [lib](lib)):
+
+- jgrapht-jdk1.6.jar (A free Java Graph Library);
+- planning-landmarks2.3.jar (A Landmark Extraction Algorithm based on [Ordered Landmarks in Planning](https://www.aaai.org/Papers/JAIR/Vol22/JAIR-2208.pdf));
+- planning-utils2.2.jar (PDDL Parser and Planning data structure from JavaFF);
