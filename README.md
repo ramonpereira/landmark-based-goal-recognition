@@ -1,4 +1,4 @@
-# Planning-PlanRecognition
+# Planning-GoalRecognition
 
 Landmark-Based Approaches For Goal Recognition.
 
@@ -16,10 +16,18 @@ These approaches have been published in ECAI-16 and AAAI-17.
 
 ## Usage
 
-- Option (1) - Parameters needed: <filter | goalcompletion | uniqueness> <tar.bz2 file> <threshold_value>
+- Option (1): Single tar.bz2 file containing domain, problem (initial state), set of goals, observations, correct goal, threshold value.
 
-> Example: filter goal_recognition-problem.tar.bz2 0.1
+> Parameters needed: <-filter | -goalcompletion | -uniqueness> <tar.bz2 file> <threshold_value>
 
-- Option (2) - Parameters needed: <filter | goalcompletion | uniqueness> <domain.pddl> <problem.pddl> <goals.dat> <observations.dat> <correct_goal.dat> <threshold_value>
+```bash
+java -jar goalrecognizer1.0.jar -filter experiments/blocks-test/blocks-test.tar.bz2 0
+```
 
-> Example: goalcompletion domain.pddl template.pddl hyps.dat obs.dat real_hyp.dat 0.15
+- Option (2): Separated files, e.g., domain, problem (initial state), set of goals, observations, correct goal, threshold value.
+
+> Parameters needed: <-filter | -goalcompletion | -uniqueness> <domain.pddl> <problem.pddl> <goals.dat> <observations.dat> <correct_goal.dat> <threshold_value>
+
+```bash
+java -jar goalrecognizer1.0.jar -goalcompletion experiments/blocks-test/domain.pddl experiments/blocks-test/template.pddl experiments/blocks-test/hyps.dat experiments/blocks-test/obs.dat experiments/blocks-test/real_hyp.dat 0.1
+```
