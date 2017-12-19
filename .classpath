@@ -5,7 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jgrapht-jdk1.6.jar"/>
-	<classpathentry kind="lib" path="lib/planning-landmarks2.3.jar"/>
-	<classpathentry kind="lib" path="lib/planning-utils2.2.jar"/>
+	<classpathentry kind="lib" path="lib/planning-landmarks3.0.jar"/>
+	<classpathentry kind="lib" path="lib/planning-utils3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
