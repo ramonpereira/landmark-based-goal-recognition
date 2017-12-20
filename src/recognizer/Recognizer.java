@@ -140,6 +140,7 @@ public abstract class Recognizer {
 			System.out.println("\t>$ " + o);
 		
 		for(GroundFact goal: this.goals){
+			currentState = this.initialState;
 			System.out.println("\n---> Goal: " + goal);
 			/* Extracting landmarks for a candidate goal from the initial state */
 			LandmarkExtractor landmarkExtractor = this.goalsToLandmarkExtractor.get(goal); 

@@ -34,4 +34,15 @@ public class LandmarkUniquenessHeuristicTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testLandmarkUniquenessHeuristic(){
+		LandmarkUniquenessHeuristic uniqHeuristic = new LandmarkUniquenessHeuristic("experiments/mnist/mnist_pb01.tar.bz2", 0);
+		try {
+			boolean recognized = uniqHeuristic.recognize();
+			assertEquals(true, recognized);
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }

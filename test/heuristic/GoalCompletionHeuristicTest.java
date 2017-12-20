@@ -37,7 +37,7 @@ public class GoalCompletionHeuristicTest {
 	
 	@Test
 	public void testGoalCompletionHeuristic(){
-		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/mnist/puzzle_mnist_01.tar.bz2", 0);
+		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/mnist/mnist_pb01.tar.bz2", 0);
 		try {
 			boolean recognized = gcHeuristic.recognize();
 			assertEquals(true, recognized);
