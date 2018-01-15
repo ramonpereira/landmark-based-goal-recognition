@@ -37,7 +37,7 @@ public class LandmarkUniquenessHeuristicTest {
 	
 	@Test
 	public void testLandmarkUniquenessHeuristic(){
-		LandmarkUniquenessHeuristic uniqHeuristic = new LandmarkUniquenessHeuristic("experiments/mnist/mnist_pb01.tar.bz2", 0);
+		LandmarkUniquenessHeuristic uniqHeuristic = new LandmarkUniquenessHeuristic("experiments/hanoi/pb01_hanoi_out_10.tar.bz2", 0);
 		try {
 			boolean recognized = uniqHeuristic.recognize();
 			assertEquals(true, recognized);

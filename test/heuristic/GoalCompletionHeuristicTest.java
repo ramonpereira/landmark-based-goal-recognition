@@ -26,7 +26,7 @@ public class GoalCompletionHeuristicTest {
 	
 	@Test
 	public void testGoalCompletionHeuristicBlocksWorldCompactedFile(){
-		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/blocks-test/blocks-test.tar.bz2", 0);
+		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/spider/pb04_spider_out_100.tar.bz2", 0.0f);
 		try {
 			boolean recognized = gcHeuristic.recognize();
 			assertEquals(true, recognized);
@@ -37,7 +37,7 @@ public class GoalCompletionHeuristicTest {
 	
 	@Test
 	public void testGoalCompletionHeuristic(){
-		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/mnist/mnist_pb01.tar.bz2", 0);
+		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/spider/pb03_spider_out_100.tar.bz2", 0.0f);
 		try {
 			boolean recognized = gcHeuristic.recognize();
 			assertEquals(true, recognized);
