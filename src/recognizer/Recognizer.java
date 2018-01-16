@@ -54,8 +54,10 @@ public abstract class Recognizer {
 				throw new IOException(fileName + " not found.");
 			
 			System.out.println("rm -rf domain.pddl template.pddl templateInitial.pddl obs.dat hyps.dat plan.png real_hyp.dat");
+			Process p = Runtime.getRuntime().exec("rm -rf domain.pddl template.pddl templateInitial.pddl obs.dat hyps.dat plan.png real_hyp.dat");
+			p.waitFor();
 			System.out.println("tar -jxvf " + this.planRecognitionFile);
-			Process p = Runtime.getRuntime().exec("tar -jxvf " + this.planRecognitionFile);
+			p = Runtime.getRuntime().exec("tar -jxvf " + this.planRecognitionFile);
 			p.waitFor();
 			String domainFilePath = "domain.pddl";
 			Path path = Paths.get(domainFilePath);
