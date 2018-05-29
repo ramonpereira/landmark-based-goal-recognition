@@ -15,7 +15,7 @@ public class GoalRecognizer {
 				float threshold = Float.valueOf(args[2]);
 				if(args[0].equals("-filter")){
 					GoalRecognitionFilter filter = new GoalRecognitionFilter(goalRecognitionFile, threshold);
-					filter.filter(false);
+					filter.filter(true);
 				} else if(args[0].equals("-goalcompletion")){
 					GoalCompletionHeuristic gc = new GoalCompletionHeuristic(goalRecognitionFile, threshold);
 					gc.recognize();

@@ -29,9 +29,9 @@ public class GoalRecognitionFilterTest {
 	
 	@Test
 	public void testFilterBlocksWorldCompactedFile(){
-		GoalRecognitionFilter filter = new GoalRecognitionFilter("experiments/blocks-test/blocks-test.tar.bz2", 0);
+		GoalRecognitionFilter filter = new GoalRecognitionFilter("experiments/blocks-test/block-words_p03_hyp-10_30_0.tar.bz2", 0.1f);
 		try {
-			Set<GroundFact> filteredGoals = filter.filter(false);
+			Set<GroundFact> filteredGoals = filter.filter(true);
 			assertEquals(1, filteredGoals.size());
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();

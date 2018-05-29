@@ -121,23 +121,26 @@ public class GoalRecognitionFilter extends Recognizer {
 			filteredGoals.add(goal);
 		}
 		String filteredGoalsToFile = "";
-		for(GroundFact g: goalsAchievedLandmarks.keySet()){
-			String goal = "";
-			if(goalsAchievedLandmarks.get(g) >= (highestPercentageAchievedLandmarks - threshold)){
-				int size = g.getFacts().size();
-				int i = 0;
-				for(Fact f: g.getFacts()){
-					i++;
-					goal += "(" + f.toString() + ")" + (i == size ? "" : ",");
-				}
+		if(goalsAchievedLandmarks.keySet().isEmpty()){
+			for(GroundFact g: this.goals){
+				String goal = this.getGoalString(g);
 				filteredGoalsToFile += goal + "\n";
-			} else filteredGoals.remove(g);
+				filteredGoals.add(g);
+			}
+		} else {
+			for(GroundFact g: goalsAchievedLandmarks.keySet()){
+				String goal = "";
+				if(goalsAchievedLandmarks.get(g) >= (highestPercentageAchievedLandmarks - threshold)){
+					goal = this.getGoalString(g);
+					filteredGoalsToFile += goal + "\n";
+				} else filteredGoals.remove(g);
+			}
 		}
 		System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$ Filtered Goals $$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
 		for(GroundFact goal: filteredGoals)
-			System.out.println("$> " + goal + ": " + goalsAchievedLandmarks.get(goal));
+			System.out.println("$> " + goal + ": " + (goalsAchievedLandmarks.get(goal) == null ? 0 : goalsAchievedLandmarks.get(goal)));
 		
 		if(generateFile){
 			File realGoalFile = new File("real_hyp.dat");
@@ -165,5 +168,16 @@ public class GoalRecognitionFilter extends Recognizer {
 		}			
 		Runtime.getRuntime().exec("rm -rf domain.pddl template.pddl templateInitial.pddl hyps.dat real_hyp.dat obs.dat");
 		return filteredGoals;
+	}
+	
+	private String getGoalString(GroundFact g){
+		String goal = "";
+		int size = g.getFacts().size();
+		int i = 0;
+		for(Fact f: g.getFacts()){
+			i++;
+			goal += "(" + f.toString() + ")" + (i == size ? "" : ",");
+		}
+		return goal;
 	}
 }
