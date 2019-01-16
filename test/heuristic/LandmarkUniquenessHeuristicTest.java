@@ -11,11 +11,11 @@ public class LandmarkUniquenessHeuristicTest {
 	@Test
 	public void testLandmarkUniquenessHeuristicBlocksWorldSeparatedFiles(){
 		LandmarkUniquenessHeuristic uniqHeuristic = new LandmarkUniquenessHeuristic(
-				"experiments/blocks-test/domain.pddl", 
-				"experiments/blocks-test/template.pddl", 
-				"experiments/blocks-test/hyps.dat", 
-				"experiments/blocks-test/obs.dat", 
-				"experiments/blocks-test/real_hyp.dat", 0);
+				"experiments/factobs/lotwisted/pb06_lotwisted_out_70/domain.pddl", 
+				"experiments/factobs/lotwisted/pb06_lotwisted_out_70/template.pddl", 
+				"experiments/factobs/lotwisted/pb06_lotwisted_out_70/hyps.dat", 
+				"experiments/factobs/lotwisted/pb06_lotwisted_out_70/obs.dat", 
+				"experiments/factobs/lotwisted/pb06_lotwisted_out_70/real_hyp.dat", 0.05f);
 		try {
 			boolean recognized = uniqHeuristic.recognize();
 			assertEquals(true, recognized);
@@ -25,11 +25,11 @@ public class LandmarkUniquenessHeuristicTest {
 	}
 	
 	@Test
-	public void testLandmarkUniquenessHeuristicBlocksWorldCompactedFile(){
-		LandmarkUniquenessHeuristic uniqHeuristic = new LandmarkUniquenessHeuristic("experiments/blocks-test/blocks-test.tar.bz2", 0);
+	public void testLandmarkUniquenessHeuristicCompactedFileSpider(){
+		LandmarkUniquenessHeuristic uniqHeuristic = new LandmarkUniquenessHeuristic("experiments/factobs/spider/pb04_spider_out_30.tar.bz2", 0f);
 		try {
 			boolean recognized = uniqHeuristic.recognize();
-			assertEquals(true, recognized);
+			assertEquals(false, recognized);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -37,7 +37,7 @@ public class LandmarkUniquenessHeuristicTest {
 	
 	@Test
 	public void testLandmarkUniquenessHeuristic(){
-		LandmarkUniquenessHeuristic uniqHeuristic = new LandmarkUniquenessHeuristic("experiments/hanoi/pb01_hanoi_out_10.tar.bz2", 0);
+		LandmarkUniquenessHeuristic uniqHeuristic = new LandmarkUniquenessHeuristic("experiments/factobs/mandrill/pb04_mandrill_out_50.tar.bz2", 0.1f);
 		try {
 			boolean recognized = uniqHeuristic.recognize();
 			assertEquals(true, recognized);

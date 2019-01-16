@@ -12,24 +12,24 @@ import javaff.data.GroundFact;
 public class GoalRecognitionFilterTest {
 
 	@Test
-	public void testFilterBlocksWorldSeparatedFiles(){
+	public void testFilterSeparatedFilesLODigital(){
 		GoalRecognitionFilter filter = new GoalRecognitionFilter(
-				"experiments/blocks-test/domain.pddl", 
-				"experiments/blocks-test/template.pddl", 
-				"experiments/blocks-test/hyps.dat", 
-				"experiments/blocks-test/obs.dat", 
-				"experiments/blocks-test/real_hyp.dat", 0);
+				"experiments/factobs/lodigital/pb05_lodigital_out_100/domain.pddl", 
+				"experiments/factobs/lodigital/pb05_lodigital_out_100/template.pddl", 
+				"experiments/factobs/lodigital/pb05_lodigital_out_100/hyps.dat", 
+				"experiments/factobs/lodigital/pb05_lodigital_out_100/obs.dat", 
+				"experiments/factobs/lodigital/pb05_lodigital_out_100/real_hyp.dat", 0);
 		try {
 			Set<GroundFact> filteredGoals = filter.filter(false);
-			assertEquals(1, filteredGoals.size());
+			assertEquals(3, filteredGoals.size());
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	@Test
-	public void testFilterBlocksWorldCompactedFile(){
-		GoalRecognitionFilter filter = new GoalRecognitionFilter("experiments/blocks-test/block-words_p03_hyp-10_30_0.tar.bz2", 0.1f);
+	public void testFilterCompactedFileLODigital(){
+		GoalRecognitionFilter filter = new GoalRecognitionFilter("experiments/factobs/lodigital/pb05_lodigital_out_10.tar.bz2", 0f);
 		try {
 			Set<GroundFact> filteredGoals = filter.filter(true);
 			assertEquals(1, filteredGoals.size());

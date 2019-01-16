@@ -9,35 +9,24 @@ import org.junit.Test;
 public class GoalCompletionHeuristicTest {
 
 	@Test
-	public void testGoalCompletionHeuristicBlocksWorldSeparatedFiles(){
+	public void testGoalCompletionHeuristicSeparatedFilesHanoi(){
 		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic(
-				"experiments/blocks-test/domain.pddl", 
-				"experiments/blocks-test/template.pddl", 
-				"experiments/blocks-test/hyps.dat", 
-				"experiments/blocks-test/obs.dat", 
-				"experiments/blocks-test/real_hyp.dat", 0);
+				"experiments/factobs/hanoi/pb01_hanoi_out_10/domain.pddl", 
+				"experiments/factobs/hanoi/pb01_hanoi_out_10/template.pddl", 
+				"experiments/factobs/hanoi/pb01_hanoi_out_10/hyps.dat", 
+				"experiments/factobs/hanoi/pb01_hanoi_out_10/obs.dat", 
+				"experiments/factobs/hanoi/pb01_hanoi_out_10/real_hyp.dat", 0);
 		try {
 			boolean recognized = gcHeuristic.recognize();
-			assertEquals(true, recognized);
+			assertEquals(false, recognized);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	@Test
-	public void testGoalCompletionHeuristicBlocksWorldCompactedFile(){
-		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/lodigital/pb06_lodigital_out_100.tar.bz2", 0.0f);
-		try {
-			boolean recognized = gcHeuristic.recognize();
-			assertEquals(true, recognized);
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void testGoalCompletionHeuristic(){
-		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/mnist/pb02_mnist_out_100.tar.bz2", 0.0f);
+	public void testGoalCompletionHeuristicCompactedFileHanoi(){
+		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/factobs/hanoi/pb01_hanoi_out_100.tar.bz2", 0f);;
 		try {
 			boolean recognized = gcHeuristic.recognize();
 			assertEquals(true, recognized);

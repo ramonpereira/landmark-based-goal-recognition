@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 
 import extracting.PartialLandmarkGenerator;
-import javaff.data.Action;
 import javaff.data.Fact;
 import javaff.data.GroundFact;
 import javaff.data.GroundProblem;
@@ -36,7 +35,7 @@ public abstract class Recognizer {
 	};
 
 	protected GroundProblem groundProblem;
-	protected List<Action> observations;
+	protected List<Set<Fact>> observations;
 	protected List<GroundFact> goals;
 	protected GroundFact realGoal;
 	protected STRIPSState initialState;
@@ -53,7 +52,7 @@ public abstract class Recognizer {
 			if(!Files.isReadable(Paths.get(fileName)))
 				throw new IOException(fileName + " not found.");
 			
-			String cmdRemovingFiles = "rm -rf domain.pddl template.pddl templateInitial.pddl obs.dat hyps.dat plan.png real_hyp.dat";
+			String cmdRemovingFiles = "rm -rf domain.pddl template.pddl problem.pddl problem_neg.pddl templateInitial.pddl obs.dat obs2.dat hyps.dat plan.png real_hyp.dat log.txt";
 			System.out.println(cmdRemovingFiles);
 			Process p = Runtime.getRuntime().exec(cmdRemovingFiles);
 			p.waitFor();
@@ -85,7 +84,7 @@ public abstract class Recognizer {
 			
 			this.threshold = threshold;
 			this.groundProblem = PDDLParser.getGroundDomainProblem(domainFilePath, initialFilePath);
-			this.observations = PDDLParser.getObservations(groundProblem, observationsFilePath);
+			this.observations = PDDLParser.getObservationsAsFacts(groundProblem, observationsFilePath);
 			this.goals = PDDLParser.getGoals(groundProblem, goalsFilePath);
 			this.realGoal = PDDLParser.getGoals(groundProblem, realGoalFilePath).get(0);
 			this.initialState = groundProblem.getSTRIPSInitialState();
@@ -121,7 +120,7 @@ public abstract class Recognizer {
 			
 			this.threshold = threshold;
 			this.groundProblem = PDDLParser.getGroundDomainProblem(domainFilePath, initialFilePath);
-			this.observations = PDDLParser.getObservations(groundProblem, observationsFile);
+			this.observations = PDDLParser.getObservationsAsFacts(groundProblem, observationsFile);
 			this.goals = PDDLParser.getGoals(groundProblem, candidateGoalsFile);
 			this.realGoal = PDDLParser.getGoals(groundProblem, correctGoalFile).get(0);
 			this.initialState = groundProblem.getSTRIPSInitialState();
@@ -140,12 +139,13 @@ public abstract class Recognizer {
 		System.out.println("# Initial state: " + this.initialState + "\n");
 		System.out.println("# Observations: ");
 		STRIPSState currentState = this.initialState;
-		for(Action o: this.observations)
+		for(Set<Fact> o: this.observations)
 			System.out.println("\t>$ " + o);
 		
 		for(GroundFact goal: this.goals){
 			currentState = this.initialState;
 			System.out.println("\n---> Goal: " + goal);
+			
 			/* Extracting landmarks for a candidate goal from the initial state */
 			LandmarkExtractor landmarkExtractor = this.goalsToLandmarkExtractor.get(goal); 
 			if(landmarkExtractor == null){
@@ -161,11 +161,10 @@ public abstract class Recognizer {
 			System.out.println();
 			
 			/* Computing achieved landmarks from observations for a candidate goal */
-			for(Action o: observations){
+			for(Set<Fact> o: observations){
 				Set<Fact> observedFacts = new HashSet<>();
 				System.out.println("\t>$ " + o);
-				observedFacts.addAll(o.getAddPropositions());
-				observedFacts.addAll(o.getPreconditions());
+				observedFacts.addAll(o);
 				observedFacts.addAll(currentState.getFacts());
 				for(LandmarkOrdering landmarkOrdering: landmarkExtractor.getLandmarksOrdering()){
 					for(Set<Fact> factsOrdering: landmarkOrdering.getOrdering()){
@@ -176,7 +175,6 @@ public abstract class Recognizer {
 						}
 					}
 				}
-				currentState = (STRIPSState) currentState.apply(o);
 			}
 			goalsToAchievedLandmarks.put(goal, achievedLandmarks);
 			System.out.println("\n\t># Achieved Landmarks in Observations: \n\t\t" + achievedLandmarks);

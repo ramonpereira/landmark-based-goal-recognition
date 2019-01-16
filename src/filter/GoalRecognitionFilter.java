@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import extracting.PartialLandmarkGenerator;
-import javaff.data.Action;
 import javaff.data.Fact;
 import javaff.data.GroundFact;
 import javaff.planning.STRIPSState;
@@ -52,7 +51,7 @@ public class GoalRecognitionFilter extends Recognizer {
 		System.out.println("# Initial state: " + this.initialState + "\n");
 		System.out.println("# Observations: ");
 		STRIPSState currentState = this.initialState;
-		for(Action o: this.observations)
+		for(Set<Fact> o: this.observations)
 			System.out.println("\t>$ " + o);
 		
 		Map<GroundFact, Float> goalsAchievedLandmarks = new HashMap<GroundFact, Float>();
@@ -81,11 +80,10 @@ public class GoalRecognitionFilter extends Recognizer {
 			System.out.println();
 			
 			/* Computing achieved landmarks from observations for a candidate goal */
-			for(Action o: observations){
+			for(Set<Fact> o: observations){
 				Set<Fact> observedFacts = new HashSet<>();
 				System.out.println("\t>$ " + o);
-				observedFacts.addAll(o.getAddPropositions());
-				observedFacts.addAll(o.getPreconditions());
+				observedFacts.addAll(o);
 				observedFacts.addAll(currentState.getFacts());
 				for(LandmarkOrdering landmarkOrdering: landmarkExtractor.getLandmarksOrdering()){
 					for(Set<Fact> factsOrdering: landmarkOrdering.getOrdering()){
@@ -96,7 +94,6 @@ public class GoalRecognitionFilter extends Recognizer {
 						}
 					}
 				}
-				currentState = (STRIPSState) currentState.apply(o);
 			}
 			System.out.println("\n\t># Achieved Landmarks in Observations: \n\t\t" + achievedLandmarksGoal);
 			System.out.println();
@@ -166,7 +163,7 @@ public class GoalRecognitionFilter extends Recognizer {
 			Thread.sleep(50);
 			System.out.println("\nThe set of filtered candidate goals (hyps.dat) are in: " + this.planRecognitionFile.replace(".tar.bz2", "") + "_FILTERED.tar.bz2");	
 		}			
-		Runtime.getRuntime().exec("rm -rf domain.pddl template.pddl templateInitial.pddl hyps.dat real_hyp.dat obs.dat");
+		Runtime.getRuntime().exec("rm -rf domain.pddl template.pddl problem.pddl problem_neg.pddl templateInitial.pddl obs.dat obs2.dat hyps.dat plan.png real_hyp.dat log.txt");
 		return filteredGoals;
 	}
 	

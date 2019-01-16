@@ -1,0 +1,26 @@
+(define (problem pb1)
+    (:domain generated-domain)
+    (:init
+       (p0)
+       (p3)
+       (p4)
+       (p6)
+       (p9)
+       (p15)
+       (p16)
+       (p22)
+       (p25)
+       (p27)
+       (p28)
+       (p29)
+       (p30)
+       (p31)
+       (p32)
+       (p35)
+    )
+    (:goal
+      (and
+            <HYPOTHESIS>
+      )
+    )
+)
