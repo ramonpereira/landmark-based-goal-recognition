@@ -12,7 +12,6 @@ import java.util.Set;
 import extracting.PartialLandmarkGenerator;
 import javaff.data.Fact;
 import javaff.data.GroundFact;
-import javaff.planning.STRIPSState;
 import landmark.LandmarkExtractor;
 import landmark.LandmarkOrdering;
 import recognizer.Recognizer;
@@ -50,7 +49,6 @@ public class GoalRecognitionFilter extends Recognizer {
 		Set<GroundFact> filteredGoals = new HashSet<>();
 		System.out.println("# Initial state: " + this.initialState + "\n");
 		System.out.println("# Observations: ");
-		STRIPSState currentState = this.initialState;
 		for(Set<Fact> o: this.observations)
 			System.out.println("\t>$ " + o);
 		
@@ -84,7 +82,6 @@ public class GoalRecognitionFilter extends Recognizer {
 				Set<Fact> observedFacts = new HashSet<>();
 				System.out.println("\t>$ " + o);
 				observedFacts.addAll(o);
-				observedFacts.addAll(currentState.getFacts());
 				for(LandmarkOrdering landmarkOrdering: landmarkExtractor.getLandmarksOrdering()){
 					for(Set<Fact> factsOrdering: landmarkOrdering.getOrdering()){
 						if(observedFacts.containsAll(factsOrdering) && !achievedLandmarksGoal.contains(factsOrdering)){

@@ -138,12 +138,10 @@ public abstract class Recognizer {
 		System.out.println("$$$> Computing achieved landmarks from observations for all candidate goals: \n");
 		System.out.println("# Initial state: " + this.initialState + "\n");
 		System.out.println("# Observations: ");
-		STRIPSState currentState = this.initialState;
 		for(Set<Fact> o: this.observations)
 			System.out.println("\t>$ " + o);
 		
 		for(GroundFact goal: this.goals){
-			currentState = this.initialState;
 			System.out.println("\n---> Goal: " + goal);
 			
 			/* Extracting landmarks for a candidate goal from the initial state */
@@ -161,11 +159,10 @@ public abstract class Recognizer {
 			System.out.println();
 			
 			/* Computing achieved landmarks from observations for a candidate goal */
+			Set<Fact> observedFacts = new HashSet<>();
 			for(Set<Fact> o: observations){
-				Set<Fact> observedFacts = new HashSet<>();
 				System.out.println("\t>$ " + o);
 				observedFacts.addAll(o);
-				observedFacts.addAll(currentState.getFacts());
 				for(LandmarkOrdering landmarkOrdering: landmarkExtractor.getLandmarksOrdering()){
 					for(Set<Fact> factsOrdering: landmarkOrdering.getOrdering()){
 						if(observedFacts.containsAll(factsOrdering) && !achievedLandmarks.contains(factsOrdering)){
