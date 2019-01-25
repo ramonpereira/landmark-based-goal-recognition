@@ -78,8 +78,10 @@ public class GoalRecognitionFilter extends Recognizer {
 			System.out.println();
 			
 			/* Computing achieved landmarks from observations for a candidate goal */
+			Set<Fact> observedFacts = new HashSet<>();
+			Set<Fact> initialStateFacts = this.initialState.getFacts();
+			observedFacts.addAll(initialStateFacts);
 			for(Set<Fact> o: observations){
-				Set<Fact> observedFacts = new HashSet<>();
 				System.out.println("\t>$ " + o);
 				observedFacts.addAll(o);
 				for(LandmarkOrdering landmarkOrdering: landmarkExtractor.getLandmarksOrdering()){

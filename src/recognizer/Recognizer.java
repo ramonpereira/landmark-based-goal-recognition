@@ -160,6 +160,8 @@ public abstract class Recognizer {
 			
 			/* Computing achieved landmarks from observations for a candidate goal */
 			Set<Fact> observedFacts = new HashSet<>();
+			Set<Fact> initialStateFacts = this.initialState.getFacts();
+			observedFacts.addAll(initialStateFacts);
 			for(Set<Fact> o: observations){
 				System.out.println("\t>$ " + o);
 				observedFacts.addAll(o);

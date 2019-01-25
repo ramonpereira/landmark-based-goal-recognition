@@ -25,6 +25,22 @@ public class GoalCompletionHeuristicTest {
 	}
 	
 	@Test
+	public void testGoalCompletionHeuristicSeparatedFilesLODigital(){
+		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic(
+				"experiments/factobs/lodigital/pb06_lodigital_out_100/domain.pddl", 
+				"experiments/factobs/lodigital/pb06_lodigital_out_100/template.pddl", 
+				"experiments/factobs/lodigital/pb06_lodigital_out_100/hyps.dat", 
+				"experiments/factobs/lodigital/pb06_lodigital_out_100/obs.dat", 
+				"experiments/factobs/lodigital/pb06_lodigital_out_100/real_hyp.dat", 0.0f);
+		try {
+			boolean recognized = gcHeuristic.recognize();
+			assertEquals(true, recognized);
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+	}	
+	
+	@Test
 	public void testGoalCompletionHeuristicCompactedFileHanoi(){
 		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/factobs/hanoi/pb01_hanoi_out_100.tar.bz2", 0f);;
 		try {
