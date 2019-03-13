@@ -1,4 +1,4 @@
-# Planning-GoalRecognition
+# Landmark-Based-GoalRecognition
 
 Landmark-Based Approaches For Goal Recognition.
 
