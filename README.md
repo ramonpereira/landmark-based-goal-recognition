@@ -38,7 +38,7 @@ Our approaches also deal with observations as facts. To use the recognizers in s
 
 - https://github.com/ramonpereira/Landmark-Based-GoalRecognition/tree/obsfacts
 
-In the following link we have some examples of how we use observations as facts:
+At the following link we have some examples of how we use observations as facts:
 
 - https://github.com/ramonpereira/Landmark-Based-GoalRecognition/tree/obsfacts/experiments/factobs
 
