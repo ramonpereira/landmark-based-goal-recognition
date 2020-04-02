@@ -6,6 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jgrapht-jdk1.6.jar"/>
 	<classpathentry kind="lib" path="lib/planning-landmarks3.0.jar"/>
-	<classpathentry kind="lib" path="lib/planning-utils4.0.jar"/>
+	<classpathentry kind="lib" path="lib/planning-utils5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
