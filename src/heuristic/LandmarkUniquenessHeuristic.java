@@ -90,7 +90,7 @@ public class LandmarkUniquenessHeuristic extends Recognizer {
 		boolean correctGoalRecognized = recognizedGoals.contains(this.realGoal);
 		System.out.println("\n<?> Correct goal: " + this.realGoal);
 		System.out.println("<?> Was the correct goal recognized correctly? " + correctGoalRecognized);
-		Process p = Runtime.getRuntime().exec("rm -rf domain.pddl template.pddl templateInitial.pddl obs.dat hyps.dat plan.png real_hyp.dat");
+		Process p = Runtime.getRuntime().exec("rm -rf domain.pddl template.pddl templateInitial.pddl obs.dat obs_noisy.dat hyps.dat plan.png real_hyp.dat");
 		p.waitFor();
 		return correctGoalRecognized;
 	}

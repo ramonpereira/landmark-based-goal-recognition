@@ -37,6 +37,7 @@ public abstract class Recognizer {
 
 	protected GroundProblem groundProblem;
 	protected List<Action> observations;
+	protected List<Action> observationsNoisy;
 	protected List<GroundFact> goals;
 	protected GroundFact realGoal;
 	protected STRIPSState initialState;
@@ -72,6 +73,7 @@ public abstract class Recognizer {
 			
 			String initialFilePath = "templateInitial.pddl";
 			String observationsFilePath = "obs.dat";
+			String observationsNoisyFilePath = "obs_noisy.dat";
 			String goalsFilePath = "hyps.dat";
 			String realGoalFilePath = "real_hyp.dat";
 			path = Paths.get("template.pddl");
@@ -86,6 +88,10 @@ public abstract class Recognizer {
 			this.threshold = threshold;
 			this.groundProblem = PDDLParser.getGroundDomainProblem(domainFilePath, initialFilePath);
 			this.observations = PDDLParser.getObservations(groundProblem, observationsFilePath);
+			File f = new File(observationsNoisyFilePath);
+			if(f.exists() && !f.isDirectory())
+				this.observationsNoisy = PDDLParser.getObservations(groundProblem, observationsNoisyFilePath);
+			
 			this.goals = PDDLParser.getGoals(groundProblem, goalsFilePath);
 			this.realGoal = PDDLParser.getGoals(groundProblem, realGoalFilePath).get(0);
 			this.initialState = groundProblem.getSTRIPSInitialState();
@@ -217,5 +223,9 @@ public abstract class Recognizer {
 	
 	public int getObservationsSize(){
 		return this.observations.size();
+	}
+	
+	public int getObservationsNoisySize(){
+		return this.observationsNoisy.size();
 	}
 }
