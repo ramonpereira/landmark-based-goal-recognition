@@ -25,6 +25,8 @@ import recognizer.Recognizer;
  *
  */
 public class GoalCompletionHeuristic extends Recognizer {
+	
+	private Map<GroundFact, Float> goalsToGoalCompletionScores = new HashMap<>();
 
 	public GoalCompletionHeuristic(String fileName, float threshold) {
 		super(fileName, threshold);
@@ -36,10 +38,9 @@ public class GoalCompletionHeuristic extends Recognizer {
 	
 	@Override
 	public boolean recognize() throws IOException, InterruptedException{
-		/* Extracing and computing achieved landmarks in the observations */
+		/* Extracting and computing achieved landmarks in the observations */
 		Map<GroundFact, Set<Set<Fact>>> achievedLandmarksForAllGoals = this.getAchievedLandmarksForAllGoals();
 		
-		Map<GroundFact, Float> goalsToEstimativeGoalCompletion = new HashMap<>();
 		float maxGoalCompletion = 0f;
 		System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$ Goal Completion Heuristic $$$$$$$$$$$");
@@ -61,15 +62,15 @@ public class GoalCompletionHeuristic extends Recognizer {
 			/* Estimating goal completion using Goal Completion Heuristic - hgc(G) */
 			float goalCompletion = getEstimate(goal, achievedLandmarksForAllGoals.get(goal));
 			System.out.println("$> " + goal + ": " + goalCompletion);
-			goalsToEstimativeGoalCompletion.put(goal, goalCompletion);
+			this.goalsToGoalCompletionScores.put(goal, goalCompletion);
 			if(goalCompletion > maxGoalCompletion)
 				maxGoalCompletion = goalCompletion;
 		}
 		System.out.println("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$> Recognized goal(s) within the threshold " + this.threshold + ": ");
 		Set<GroundFact> recognizedGoals = new HashSet<>();
-		for(GroundFact goal: goalsToEstimativeGoalCompletion.keySet()){
-			float estimatedValue = goalsToEstimativeGoalCompletion.get(goal);
+		for(GroundFact goal: this.goalsToGoalCompletionScores.keySet()){
+			float estimatedValue = this.goalsToGoalCompletionScores.get(goal);
 			if(estimatedValue >= (maxGoalCompletion - threshold)){
 				recognizedGoals.add(goal);
 				System.out.println("$> " + goal + ": " + estimatedValue);
@@ -83,6 +84,10 @@ public class GoalCompletionHeuristic extends Recognizer {
 		Process p = Runtime.getRuntime().exec("rm -rf domain.pddl template.pddl templateInitial.pddl obs.dat obs_noisy.dat hyps.dat plan.png real_hyp.dat");
 		p.waitFor();
 		return correctGoalRecognized;
+	}
+	
+	public Map<GroundFact, Float> getGoalsToGoalCompletionScores() {
+		return goalsToGoalCompletionScores;
 	}
 	
 	/**
@@ -111,7 +116,7 @@ public class GoalCompletionHeuristic extends Recognizer {
 	 * @return
 	 */
 	public float getEstimate(GroundFact goal, Set<Set<Fact>> achievedLandmarks){
-		float amountOfAchievedLandmarks = achievedLandmarks.size(); 
+		float amountOfAchievedLandmarks = achievedLandmarks.size();
 		float amountOfLandmarks = this.goalsToLandmarkExtractor.get(goal).getAmountOfLandmarks();
 		return (amountOfAchievedLandmarks / amountOfLandmarks);
 	}

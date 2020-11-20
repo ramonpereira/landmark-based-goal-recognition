@@ -158,6 +158,8 @@ public abstract class Recognizer {
 				landmarkExtractor = new PartialLandmarkGenerator(this.initialState, goal.getFacts(), this.groundProblem.getActions());
 				landmarkExtractor.extractLandmarks();
 				this.goalsToLandmarkExtractor.put(goal, landmarkExtractor);
+				this.goalsToLandmarks.put(goal, landmarkExtractor.getLandmarks());
+				this.goalsToFactLandmarks.put(goal, landmarkExtractor.getFactLandmarks());
 			}
 			System.out.println("\t\t #> Ordered Landmarks: ");
 			for(LandmarkOrdering landmarkOrdering: landmarkExtractor.getLandmarksOrdering())
@@ -185,7 +187,8 @@ public abstract class Recognizer {
 				currentState = (STRIPSState) currentState.apply(o);
 			}
 			goalsToAchievedLandmarks.put(goal, achievedLandmarks);
-			System.out.println("\n\t># Achieved Landmarks in Observations: \n\t\t" + achievedLandmarks);
+			System.out.println("\n\t># Total number of Landmarks: " + this.goalsToLandmarks.get(goal).size());
+			System.out.println("\t># Achieved Landmarks in Observations [" + achievedLandmarks.size() + "]: " + " \n\t\t" + achievedLandmarks);
 		}
 		return goalsToAchievedLandmarks;
 	}
@@ -201,6 +204,7 @@ public abstract class Recognizer {
 		}
 		return inferredFactLandmarks;
 	}
+	
 	
 	/**
 	 * This method returns true if the correct goal was recognized in the set of candidate goals from the observations.
