@@ -232,4 +232,14 @@ public abstract class Recognizer {
 	public int getObservationsNoisySize(){
 		return this.observationsNoisy.size();
 	}
+	
+	public double getAverageLandmarks() {
+		double avgLandmarks = 0;
+		double totalLandmarks = 0;
+		for(Set<Fact> landmarks: this.goalsToFactLandmarks.values())
+			totalLandmarks += landmarks.size();
+
+		avgLandmarks = totalLandmarks / this.goalsToFactLandmarks.size();
+		return avgLandmarks;
+	}
 }
