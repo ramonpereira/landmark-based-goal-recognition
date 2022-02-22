@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import extracting.PartialLandmarkGenerator;
+import javaff.data.Action;
 import javaff.data.Fact;
 import javaff.data.GroundFact;
 import javaff.data.GroundProblem;
@@ -35,6 +36,7 @@ public abstract class Recognizer {
 	};
 
 	protected GroundProblem groundProblem;
+	protected List<Action> observationsNoisy;
 	protected List<Set<Fact>> observations;
 	protected List<GroundFact> goals;
 	protected GroundFact realGoal;
@@ -214,5 +216,19 @@ public abstract class Recognizer {
 	
 	public int getObservationsSize(){
 		return this.observations.size();
+	}
+	
+	public int getObservationsNoisySize(){
+		return this.observationsNoisy.size();
+	}
+	
+	public double getAverageLandmarks() {
+		double avgLandmarks = 0;
+		double totalLandmarks = 0;
+		for(Set<Fact> landmarks: this.goalsToFactLandmarks.values())
+			totalLandmarks += landmarks.size();
+
+		avgLandmarks = totalLandmarks / this.goalsToFactLandmarks.size();
+		return avgLandmarks;
 	}
 }
