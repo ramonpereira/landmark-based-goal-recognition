@@ -41,8 +41,8 @@ public class GoalCompletionHeuristicTest {
 	}	
 	
 	@Test
-	public void testGoalCompletionHeuristicCompactedFileHanoi(){
-		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/factobs/hanoi/pb01_hanoi_out_100.tar.bz2", 0f);;
+	public void testGoalCompletionHeuristicCompactedFile(){
+		GoalCompletionHeuristic gcHeuristic = new GoalCompletionHeuristic("experiments/test/921.tar.bz2", 0f);;
 		try {
 			boolean recognized = gcHeuristic.recognize();
 			assertEquals(true, recognized);
