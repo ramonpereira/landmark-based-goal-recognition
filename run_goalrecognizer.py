@@ -22,7 +22,7 @@ logging.getLogger('').addHandler(console)
 
 # Constants
 CURRENT_DIR = os.getcwd()
-DATASET_PATH = f"{CURRENT_DIR}/../goal-plan-recognition-dataset"
+DATASET_PATH = f"{CURRENT_DIR}/../BehaviourPlanning-based-Goal-Recognition-Dataset/dataset"
 OBSERVABILITY_DEGREES = ["10", "30", "50", "70", "100"]
 JAR_FILE = "goalrecognizer1.2.jar"
 OUTPUT_FILE = "output.txt"
