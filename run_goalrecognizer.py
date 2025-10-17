@@ -7,6 +7,7 @@ import logging
 import re
 import time
 import argparse
+import pathlib
 from datetime import datetime
 
 # Set up logging
@@ -87,8 +88,9 @@ def parse_output(output_text, execution_time):
             metrics["CORRECT"] = "True"
         else:
             metrics["CORRECT"] = "False"
-    
+
     return metrics
+
 
 def format_metrics_output(metrics):
     """Format the metrics for output"""
@@ -99,66 +101,67 @@ def format_metrics_output(metrics):
     output += f"TIME = {metrics['TIME']:.6f}\n"
     return output
 
-def process_domain(domain):
+
+def process_domain(domain, dataset_path=DATASET_PATH):
     """Process all problems for a single domain"""
-    domain_path = os.path.join(DATASET_PATH, domain)
+    domain_path = os.path.join(dataset_path, domain)
     if not os.path.exists(domain_path):
         logging.error(f"Domain path not found: {domain_path}")
         return False
-        
+
     logging.info(f"Processing domain: {domain}")
     logging.info(f"Dataset path: {DATASET_PATH}")
-    
+
     # Create results and outputs directories for this domain without timestamp
     results_dir = os.path.join(RESULTS_DIR, domain)
     outputs_dir = os.path.join(OUTPUTS_DIR, domain)
     ensure_dir(results_dir)
     ensure_dir(outputs_dir)
-    
+
     # Ensure work directory exists and is empty
     work_dir = os.path.join(WORK_DIR, domain)
     if os.path.exists(work_dir):
         shutil.rmtree(work_dir)
     os.makedirs(work_dir)
-    
+
     # Process each observability degree
     for obs_degree in OBSERVABILITY_DEGREES:
         obs_path = os.path.join(domain_path, obs_degree)
         if not os.path.exists(obs_path):
             logging.warning(f"Observability path not found: {obs_path}")
             continue
-            
+
         logging.info(f"Processing observability degree: {obs_degree}%")
         obs_results_dir = os.path.join(results_dir, obs_degree)
         obs_outputs_dir = os.path.join(outputs_dir, obs_degree)
         ensure_dir(obs_results_dir)
         ensure_dir(obs_outputs_dir)
-        
+
         # Count statistics
         total_problems = 0
         successful = 0
         failed = 0
         skipped = 0
-        
+
         # Process each problem file
         for problem_file in os.listdir(obs_path):
             if problem_file.endswith(".tar.bz2"):
                 total_problems += 1
                 problem_path = os.path.join(obs_path, problem_file)
                 problem_name = os.path.splitext(os.path.splitext(problem_file)[0])[0]
-                
+
                 # Create output and metrics file paths
                 metrics_file_path = os.path.join(obs_results_dir, f"{problem_file.replace('.tar.bz2', '.txt')}")
                 output_file_path = os.path.join(obs_outputs_dir, f"{problem_file.replace('.tar.bz2', '.txt')}")
-                
+
                 # Check if this problem was already processed
                 if os.path.exists(metrics_file_path):
                     logging.info(f"Problem already processed, skipping: {problem_name}")
                     skipped += 1
                     continue
-                
+
                 logging.info(f"Processing problem: {problem_name}")
-                
+
                 # Clean work directory
                 for file in os.listdir(work_dir):
                     file_path = os.path.join(work_dir, file)
@@ -169,7 +172,7 @@ def process_domain(domain):
                             shutil.rmtree(file_path)
                     except Exception as e:
                         logging.error(f"Error cleaning work directory: {e}")
-                
+
                 # Copy tar.bz2 file to work directory
                 work_problem_path = os.path.join(work_dir, problem_file)
                 try:
@@ -179,7 +182,7 @@ def process_domain(domain):
                     logging.error(f"Error copying problem file: {e}")
                     failed += 1
                     continue
-                
+
                 # Validate the problem file without extracting it
                 if not tarfile.is_tarfile(work_problem_path):
                     logging.error(f"Invalid tar.bz2 file: {work_problem_path}")
@@ -241,7 +244,7 @@ def process_domain(domain):
                         f.write(format_metrics_output(metrics))
                 else:
                     failed += 1
-        
+
         # Update statistics in domain log
         domain_stats_path = os.path.join(results_dir, f"{obs_degree}_stats.txt")
         with open(domain_stats_path, 'w') as stats:
@@ -252,33 +255,36 @@ def process_domain(domain):
             stats.write(f"Successful: {successful}\n")
             stats.write(f"Failed: {failed}\n")
             stats.write(f"Skipped (already processed): {skipped}\n")
-    
+
     # Clean up work directory at the end
     if os.path.exists(work_dir):
         shutil.rmtree(work_dir)
-    
+
     logging.info(f"Domain processing complete. Results stored in {results_dir} and {outputs_dir}")
     return True
+
 
 def main():
     parser = argparse.ArgumentParser(description='Process a single domain from the goal recognition dataset.')
     parser.add_argument('domain', help='The domain to process, e.g., "blocks-world"')
+    parser.add_argument('-p', '--path', type=pathlib.Path, default=DATASET_PATH, help='Path to where the dataset is located')
     args = parser.parse_args()
-    
+
     # Create the main results directory if it doesn't exist
     ensure_dir(RESULTS_DIR)
-    
+
     # Process the specified domain
     domain = args.domain
-    success = process_domain(domain)
-    
+    success = process_domain(domain, args.path)
+
     if success:
         logging.info(f"Successfully processed domain: {domain}")
     else:
         logging.error(f"Failed to process domain: {domain}")
         return 1
-    
+
     return 0
+
 
 if __name__ == "__main__":
     exit(main())

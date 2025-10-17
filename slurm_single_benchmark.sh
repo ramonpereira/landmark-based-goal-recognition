@@ -8,6 +8,6 @@ module load miniconda3
 module load openjdk
 conda activate sa-goal-recognition
 
-srun --exclusive python3 run_goalrecognizer.py $1 &
+srun --exclusive python3 run_goalrecognizer.py $1 -p ./gr-dataset &
 
 wait
