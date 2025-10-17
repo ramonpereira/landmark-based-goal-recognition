@@ -22,7 +22,13 @@ logging.getLogger('').addHandler(console)
 
 # Constants
 CURRENT_DIR = os.getcwd()
-DATASET_PATH = f"{CURRENT_DIR}/../BehaviourPlanning-based-Goal-Recognition-Dataset/dataset"
+# DATASET_PATH = f"{CURRENT_DIR}/../BehaviourPlanning-based-Goal-Recognition-Dataset/dataset"
+# DATASET_PATH =  f"{CURRENT_DIR}/../BehaviourPlanning-based-Goal-Recognition-Dataset/datasets-formatted/fbi"
+# DATASET_PATH =  f"{CURRENT_DIR}/../BehaviourPlanning-based-Goal-Recognition-Dataset/sandbox-dataset-generation/compressed_dumps/FBI/q_1.0/k_5"
+# DATASET_PATH =  f"{CURRENT_DIR}/../BehaviourPlanning-based-Goal-Recognition-Dataset/sandbox-dataset-generation/compressed_dumps/SYMK/q_1.0/k_5/"
+# DATASET_PATH =  f"{CURRENT_DIR}/../goal-plan-recognition-dataset/"
+# DATASET_PATH =  f"{CURRENT_DIR}/../ramirez-aaai-10-benchmarks/"
+DATASET_PATH =  f"{CURRENT_DIR}/../ramirez-ijcai-09-benchmarks/"
 OBSERVABILITY_DEGREES = ["10", "30", "50", "70", "100"]
 JAR_FILE = "goalrecognizer1.2.jar"
 OUTPUT_FILE = "output.txt"
@@ -101,6 +107,7 @@ def process_domain(domain):
         return False
         
     logging.info(f"Processing domain: {domain}")
+    logging.info(f"Dataset path: {DATASET_PATH}")
     
     # Create results and outputs directories for this domain without timestamp
     results_dir = os.path.join(RESULTS_DIR, domain)
